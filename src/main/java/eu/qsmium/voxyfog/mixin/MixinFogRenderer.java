@@ -1,45 +1,47 @@
-package dev.not_tim.voxyfog.mixin;
+package eu.qsmium.voxyfog.mixin;
 
 import com.llamalad7.mixinextras.sugar.Local;
-import dev.not_tim.voxyfog.VoxyCompat;
-import dev.not_tim.voxyfog.VoxyFogTuning;
+import eu.qsmium.voxyfog.VoxyCompat;
+import eu.qsmium.voxyfog.VoxyFogTuning;
 import net.minecraft.client.Camera;
 import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
-import net.minecraft.client.renderer.fog.FogData;
-import net.minecraft.client.renderer.fog.FogRenderer;
+import net.minecraft.client.renderer.FogRenderer;
 import org.joml.Vector4f;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(value = FogRenderer.class, priority = 900)
-public abstract class MixinFogRenderer {
+public abstract class MixinFogRenderer
+{
     @Inject(
             method = "setupFog",
             at = @At(
                     value = "INVOKE",
-                    target = "Lcom/mojang/blaze3d/systems/RenderSystem;getDevice()Lcom/mojang/blaze3d/systems/GpuDevice;",
+                    target = "Lnet/neoforged/neoforge/client/ClientHooks;onFogRender(Lnet/minecraft/client/renderer/FogRenderer$FogMode;Lnet/minecraft/world/level/material/FogType;Lnet/minecraft/client/Camera;FFFFLcom/mojang/blaze3d/shaders/FogShape;)V",
                     remap = false
             )
     )
-    private void voxyfog$applyVoxyDistanceFog(
+    private static void voxyfog$applyVoxyDistanceFog(
             Camera camera,
-            int renderDistance,
-            DeltaTracker deltaTracker,
+            FogRenderer.FogMode fogMode,
+            float farPlaneDistance,
+            boolean shouldCreateFog,
             float partialTick,
-            ClientLevel level,
-            CallbackInfoReturnable<Vector4f> cir,
-            @Local(type = FogData.class) FogData fogData
+            CallbackInfo ci,
+            @Local(type = FogRenderer.FogData.class) FogRenderer.FogData fogData
     ) {
         VoxyCompat.State state = VoxyCompat.getState();
         if (!state.isActive()) {
             return;
         }
 
-        if (fogData.environmentalEnd < 16.0f) {
+        if (fogData.end < 16.0f) {
             return;
         }
 
@@ -49,7 +51,7 @@ public abstract class MixinFogRenderer {
             return;
         }
 
-        fogData.environmentalStart = Math.min(fogData.environmentalStart, fogRange.start());
-        fogData.environmentalEnd = Math.min(fogData.environmentalEnd, fogRange.end());
+        fogData.start = Math.min(fogData.start, fogRange.start());
+        fogData.end = Math.min(fogData.end, fogRange.end());
     }
 }

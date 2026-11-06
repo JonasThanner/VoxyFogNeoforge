@@ -1,4 +1,4 @@
-package dev.not_tim.voxyfog;
+package eu.qsmium.voxyfog;
 
 public final class VoxyFogTuning {
     private static final float MIN_OVERRIDE_DISTANCE = 48.0f;

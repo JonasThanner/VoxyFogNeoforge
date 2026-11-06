@@ -1,10 +1,10 @@
 {
   "required": true,
-  "package": "dev.not_tim.voxyfog.mixin",
+  "package": "eu.qsmium.voxyfog.mixin",
   "compatibilityLevel": "JAVA_21",
+  "refmap": "createreturnticket.refmap.json",
   "client": [
-    "MixinFogRenderer",
-    "MixinVideoSettingsScreen"
+    "MixinFogRenderer"
   ],
   "injectors": {
     "defaultRequire": 1

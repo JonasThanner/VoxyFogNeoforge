@@ -1,4 +1,4 @@
-package dev.not_tim.voxyfog;
+package eu.qsmium.voxyfog;
 
 import java.lang.reflect.Field;
 
@@ -79,7 +79,7 @@ public final class VoxyCompat {
         }
 
         public boolean isActive() {
-            return VoxyFogConfig.isEnabled() && this.present && this.enabled && this.renderingEnabled && this.environmentalFogEnabled;
+            return VoxyFogConfig.CONFIG_SPEC.isLoaded() ? VoxyFogConfig.CONFIG.enabled.get() : VoxyFogConfig.CONFIG.enabled.getDefault()  && this.present && this.enabled && this.renderingEnabled && this.environmentalFogEnabled;
         }
 
         public float renderDistanceBlocks() {
