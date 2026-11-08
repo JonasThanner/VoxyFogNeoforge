@@ -3,8 +3,6 @@ package eu.qsmium.voxyfog;
 public final class VoxyFogTuning {
     private static final float MIN_OVERRIDE_DISTANCE = 48.0f;
     private static final float MIN_FOG_BAND = 64.0f;
-    private static final float START_RATIO = 0.82f;
-    private static final float END_RATIO = 0.98f;
 
     private VoxyFogTuning() {
     }
@@ -14,8 +12,8 @@ public final class VoxyFogTuning {
             return null;
         }
 
-        float fogEnd = Math.max(voxyDistanceBlocks * END_RATIO, vanillaDistanceBlocks + 32.0f);
-        float fogStart = Math.max(voxyDistanceBlocks * START_RATIO, vanillaDistanceBlocks + 16.0f);
+        float fogEnd = Math.max(voxyDistanceBlocks * VoxyFogConfig.SafeConfigGetValue(VoxyFogConfig.CONFIG.fogEndPercentage), vanillaDistanceBlocks + 32.0f);
+        float fogStart = Math.max(voxyDistanceBlocks * VoxyFogConfig.SafeConfigGetValue(VoxyFogConfig.CONFIG.fogStartPercentage), vanillaDistanceBlocks + 16.0f);
 
         if (fogEnd - fogStart < MIN_FOG_BAND) {
             fogStart = fogEnd - MIN_FOG_BAND;

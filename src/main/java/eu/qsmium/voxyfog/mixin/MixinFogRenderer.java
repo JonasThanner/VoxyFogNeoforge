@@ -3,6 +3,7 @@ package eu.qsmium.voxyfog.mixin;
 import com.llamalad7.mixinextras.sugar.Local;
 import com.mojang.blaze3d.systems.RenderSystem;
 import eu.qsmium.voxyfog.VoxyCompat;
+import eu.qsmium.voxyfog.VoxyFogConfig;
 import eu.qsmium.voxyfog.VoxyFogTuning;
 import net.minecraft.client.Camera;
 import net.minecraft.client.DeltaTracker;
@@ -38,7 +39,7 @@ public abstract class MixinFogRenderer
             @Local(type = FogRenderer.FogData.class) FogRenderer.FogData fogData
     ) {
         VoxyCompat.State state = VoxyCompat.getState();
-        if (!state.isActive()) {
+        if (!VoxyFogConfig.SafeConfigGetValue(VoxyFogConfig.CONFIG.enabled)) {
             return;
         }
 
