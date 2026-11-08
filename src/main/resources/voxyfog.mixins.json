@@ -2,7 +2,7 @@
   "required": true,
   "package": "eu.qsmium.voxyfog.mixin",
   "compatibilityLevel": "JAVA_21",
-  "refmap": "createreturnticket.refmap.json",
+  "refmap": "voxyfog.refmap.json",
   "client": [
     "MixinFogRenderer"
   ],

@@ -28,6 +28,11 @@ repositories {
         name "Sinytra"
         url "https://maven.su5ed.dev/releases"
     }
+
+    maven {
+        name = "Modrinth"
+        url = "https://api.modrinth.com/maven"
+    }
 }
 
 base {
@@ -121,13 +126,13 @@ configurations {
 }
 
 dependencies {
-    implementation("com.simibubi.create:create-${minecraft_version}:${create_version}:slim") { transitive = false }
-    implementation("net.createmod.ponder:Ponder-NeoForge-${minecraft_version}:${ponder_version}")
-    compileOnly("dev.engine-room.flywheel:flywheel-neoforge-api-${minecraft_version}:${flywheel_version}")
-    runtimeOnly("dev.engine-room.flywheel:flywheel-neoforge-${minecraft_version}:${flywheel_version}")
-    implementation("com.tterrag.registrate:Registrate:${registrate_version}")
+    //implementation("com.simibubi.create:create-${minecraft_version}:${create_version}:slim") { transitive = false }
+    //implementation("net.createmod.ponder:Ponder-NeoForge-${minecraft_version}:${ponder_version}")
+    //compileOnly("dev.engine-room.flywheel:flywheel-neoforge-api-${minecraft_version}:${flywheel_version}")
+    //runtimeOnly("dev.engine-room.flywheel:flywheel-neoforge-${minecraft_version}:${flywheel_version}")
+    //implementation("com.tterrag.registrate:Registrate:${registrate_version}")
 
-    implementation("net.caffeinemc:sodium-neoforge:0.8.13+mc1.21.1")
+    runtimeOnly("maven.modrinth:sodium:mc1.21.1-0.8.13-neoforge")
     implementation files("libs/roxy-1.21.1-NeoForge-0.4.0.jar")
     implementation files("libs/voxy-0.2.16-beta+1.21.11.jar")
     runtimeOnly files("libs/forgified-fabric-api-0.116.15+2.3.6+1.21.1.jar")
@@ -185,3 +190,4 @@ idea {
         downloadJavadoc = true
     }
 }
+

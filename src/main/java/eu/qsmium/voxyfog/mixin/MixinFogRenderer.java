@@ -1,6 +1,7 @@
 package eu.qsmium.voxyfog.mixin;
 
 import com.llamalad7.mixinextras.sugar.Local;
+import com.mojang.blaze3d.systems.RenderSystem;
 import eu.qsmium.voxyfog.VoxyCompat;
 import eu.qsmium.voxyfog.VoxyFogTuning;
 import net.minecraft.client.Camera;
@@ -16,7 +17,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-@Mixin(value = FogRenderer.class, priority = 900)
+@Mixin(value = FogRenderer.class, priority = 2000)
 public abstract class MixinFogRenderer
 {
     @Inject(
@@ -24,7 +25,7 @@ public abstract class MixinFogRenderer
             at = @At(
                     value = "INVOKE",
                     target = "Lnet/neoforged/neoforge/client/ClientHooks;onFogRender(Lnet/minecraft/client/renderer/FogRenderer$FogMode;Lnet/minecraft/world/level/material/FogType;Lnet/minecraft/client/Camera;FFFFLcom/mojang/blaze3d/shaders/FogShape;)V",
-                    remap = false
+                    remap = true
             )
     )
     private static void voxyfog$applyVoxyDistanceFog(
@@ -51,7 +52,11 @@ public abstract class MixinFogRenderer
             return;
         }
 
+        //We want to run this after roxy does fog modifications, because roxy is dumb and doesnt run fog modifications the simple way
+        //and does some super duper complicated stuffs where it does alot of math just to then not apply any fog ꒰(´。＿。｀)꒱
         fogData.start = Math.min(fogData.start, fogRange.start());
-        fogData.end = Math.min(fogData.end, fogRange.end());
+        fogData.end = Math.max(fogData.end, fogRange.end());
+        RenderSystem.setShaderFogStart(fogData.start);
+        RenderSystem.setShaderFogEnd(fogData.end);
     }
 }
