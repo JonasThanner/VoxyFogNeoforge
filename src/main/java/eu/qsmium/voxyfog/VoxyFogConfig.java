@@ -18,9 +18,9 @@ public final class VoxyFogConfig
 
 
     //The final stored variable of a real config object
-    public final ModConfigSpec.ConfigValue<Boolean> enabled;
-    public final ModConfigSpec.ConfigValue<Float> fogStartPercentage;
-    public final ModConfigSpec.ConfigValue<Float> fogEndPercentage;
+    public ModConfigSpec.ConfigValue<Boolean> enabled;
+    public ModConfigSpec.ConfigValue<Float> fogStartPercentage;
+    public ModConfigSpec.ConfigValue<Float> fogEndPercentage;
 
     //Default call
     private VoxyFogConfig(ModConfigSpec.Builder builder)
