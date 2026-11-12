@@ -88,3 +88,10 @@ type="required"
 versionRange="${minecraft_version_range}"
 ordering="NONE"
 side="BOTH"
+
+[[dependencies.${mod_id}]]
+modId="voxy"
+type="required"
+versionRange="*"
+ordering="NONE"
+side="CLIENT"
